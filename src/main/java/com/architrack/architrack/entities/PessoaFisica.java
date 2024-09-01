@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -29,7 +28,7 @@ public class PessoaFisica implements Serializable {
 	private String cpf;
 	
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinTable(name = "cliente_pf", joinColumns= @JoinColumn(name ="id_pf"), inverseJoinColumns =@JoinColumn(name= "id_cliente"))
+	@JoinColumn(name= "id_cliente")
 	private Cliente cliente;
 	
 	public PessoaFisica() {}
