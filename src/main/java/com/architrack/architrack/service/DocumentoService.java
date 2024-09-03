@@ -34,7 +34,7 @@ public class DocumentoService {
 		return listVo;
 	}
 	
-	public DocumentoVo cliente(DocumentoVo documento) {
+	public DocumentoVo create(DocumentoVo documento) {
 		Documento arq = mapper.parseObjectForEntity(documento, Documento.class);
 		DocumentoVo vo = mapper.parseObjectForEntity(repository.save(arq), DocumentoVo.class);
 		return vo;

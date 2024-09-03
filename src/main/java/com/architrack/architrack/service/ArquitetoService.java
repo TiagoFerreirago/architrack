@@ -34,7 +34,7 @@ public class ArquitetoService {
 		return listVo;
 	}
 	
-	public ArquitetoVo cliente(ArquitetoVo arquiteto) {
+	public ArquitetoVo create(ArquitetoVo arquiteto) {
 		Arquiteto arq = mapper.parseObjectForEntity(arquiteto, Arquiteto.class);
 		ArquitetoVo vo = mapper.parseObjectForEntity(repository.save(arq), ArquitetoVo.class);
 		return vo;

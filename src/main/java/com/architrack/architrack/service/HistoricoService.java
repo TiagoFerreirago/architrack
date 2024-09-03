@@ -49,7 +49,7 @@ public class HistoricoService {
 		return vo;
 	}
 	
-	public void historico(Long id) {
+	public void delete(Long id) {
 		Historico hist = repository.findById(id).orElseThrow(
 				() -> new ResponseNotFoundHandlerException("Id not found"));
 		repository.delete(hist);

@@ -35,7 +35,7 @@ public class ClienteService {
 		return listVo;
 	}
 	
-	public ClienteVo cliente(ClienteVo cliente) {
+	public ClienteVo create(ClienteVo cliente) {
 		Cliente cli = mapper.parseObjectForEntity(cliente, Cliente.class);
 		ClienteVo vo = mapper.parseObjectForEntity(repository.save(cli), ClienteVo.class);
 		return vo;

@@ -35,7 +35,7 @@ public class EnderecoService {
 		return listVo;
 	}
 	
-	public EnderecoVo cliente(EnderecoVo endereco) {
+	public EnderecoVo create(EnderecoVo endereco) {
 		Endereco arq = mapper.parseObjectForEntity(endereco, Endereco.class);
 		EnderecoVo vo = mapper.parseObjectForEntity(repository.save(arq), EnderecoVo.class);
 		return vo;
