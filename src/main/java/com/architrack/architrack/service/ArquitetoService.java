@@ -5,6 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import com.architrack.architrack.controller.ArquitetoController;
 import com.architrack.architrack.dozermapper.config.DozerMapper;
 import com.architrack.architrack.entities.Arquiteto;
 import com.architrack.architrack.entities.v1.vo.ArquitetoVo;
@@ -17,26 +21,29 @@ public class ArquitetoService {
 	@Autowired
 	private ArquitetoRepository repository;
 	
-	private DozerMapper mapper;
+	
 
 
 	public ArquitetoVo findById(Long id) {
 		Arquiteto arquiteto = repository.findById(id).orElseThrow(
 				() -> new ResponseNotFoundHandlerException("Id not found"));
-		ArquitetoVo vo = mapper.parseObjectForEntity(arquiteto, ArquitetoVo.class);
+		ArquitetoVo vo = DozerMapper.parseObjectForEntity(arquiteto, ArquitetoVo.class);
+		vo.add(linkTo(methodOn(ArquitetoController.class).findById(id)).withSelfRel());
 		return vo;
 		
 	}
 	
 	public List<ArquitetoVo> findAll() {
 		List<Arquiteto>arquiteto = repository.findAll();
-		List<ArquitetoVo>listVo = mapper.parseListObjectForEntity(arquiteto, ArquitetoVo.class);
+		List<ArquitetoVo>listVo = DozerMapper.parseListObjectForEntity(arquiteto, ArquitetoVo.class);
+		listVo.stream().forEach(x -> x.add(linkTo(methodOn(ArquitetoController.class).findById(x.getKey())).withSelfRel()));
 		return listVo;
 	}
 	
 	public ArquitetoVo create(ArquitetoVo arquiteto) {
-		Arquiteto arq = mapper.parseObjectForEntity(arquiteto, Arquiteto.class);
-		ArquitetoVo vo = mapper.parseObjectForEntity(repository.save(arq), ArquitetoVo.class);
+		Arquiteto arq = DozerMapper.parseObjectForEntity(arquiteto, Arquiteto.class);
+		ArquitetoVo vo = DozerMapper.parseObjectForEntity(repository.save(arq), ArquitetoVo.class);
+		vo.add(linkTo(methodOn(ArquitetoController.class).findById(arq.getId())).withSelfRel());
 		return vo;
 	}
 	
@@ -50,7 +57,8 @@ public class ArquitetoService {
 		arq.setTelefone(arquiteto.getTelefone());
 		arq.setTipo(arquiteto.getTipo());
 		
-		ArquitetoVo vo = mapper.parseObjectForEntity(repository.save(arq), ArquitetoVo.class);
+		ArquitetoVo vo = DozerMapper.parseObjectForEntity(repository.save(arq), ArquitetoVo.class);
+		vo.add(linkTo(methodOn(ArquitetoController.class).findById(arq.getId())).withSelfRel());
 		return vo;
 	}
 	

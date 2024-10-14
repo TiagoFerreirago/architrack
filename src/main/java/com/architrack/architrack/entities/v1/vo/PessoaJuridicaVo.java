@@ -25,6 +25,13 @@ public class PessoaJuridicaVo extends RepresentationModel<PessoaJuridicaVo> impl
 		
 	}
 
+	public PessoaJuridicaVo(String cnpj, String ie, Cliente cliente) {
+		
+		this.cnpj = cnpj;
+		this.inscricaoEstadual = ie;
+		this.cliente = cliente;
+	}
+	
 	public Long getKey() {
 		return key;
 	}

@@ -5,6 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import com.architrack.architrack.controller.HistoricoController;
 import com.architrack.architrack.dozermapper.config.DozerMapper;
 import com.architrack.architrack.entities.Historico;
 import com.architrack.architrack.entities.v1.vo.HistoricoVo;
@@ -16,26 +20,27 @@ public class HistoricoService {
 
 	@Autowired
 	private HistoricoRepository repository;
-	
-	public DozerMapper mapper;
-	
+		
 	
 	public HistoricoVo findById(Long id) {
 		Historico historico = repository.findById(id).orElseThrow( 
 				() -> new ResponseNotFoundHandlerException("Id not found"));
-		HistoricoVo vo = mapper.parseObjectForEntity(historico, HistoricoVo.class);
+		HistoricoVo vo = DozerMapper.parseObjectForEntity(historico, HistoricoVo.class);
+		vo.add(linkTo(methodOn(HistoricoController.class).findById(id)).withSelfRel());
 		return vo;
 	}
 	
 	public List<HistoricoVo> findAll(){
 		List<Historico>list = repository.findAll();
-		List<HistoricoVo>listVo = mapper.parseListObjectForEntity(list, HistoricoVo.class);
+		List<HistoricoVo>listVo = DozerMapper.parseListObjectForEntity(list, HistoricoVo.class);
+		listVo.stream().forEach(x -> x.add(linkTo(methodOn(HistoricoController.class).findById(x.getKey())).withSelfRel()));
 		return listVo;
 	}
 	
 	public HistoricoVo create(HistoricoVo historico) {
-		Historico hist = mapper.parseObjectForEntity(historico, Historico.class);
-		HistoricoVo vo = mapper.parseObjectForEntity(repository.save(hist),HistoricoVo.class);
+		Historico hist = DozerMapper.parseObjectForEntity(historico, Historico.class);
+		HistoricoVo vo = DozerMapper.parseObjectForEntity(repository.save(hist),HistoricoVo.class);
+		vo.add(linkTo(methodOn(HistoricoController.class).findById(hist.getId())).withSelfRel());
 		return vo;
 	}
 	
@@ -45,7 +50,8 @@ public class HistoricoService {
 		hist.setDataMudanca(historico.getDataMudanca());
 		hist.setDescricaoMudanca(historico.getDescricaoMudanca());
 		hist.setProjeto(historico.getProjeto());
-		HistoricoVo vo = mapper.parseObjectForEntity(repository.save(hist), HistoricoVo.class);
+		HistoricoVo vo = DozerMapper.parseObjectForEntity(repository.save(hist), HistoricoVo.class);
+		vo.add(linkTo(methodOn(HistoricoController.class).findById(hist.getId())).withSelfRel());
 		return vo;
 	}
 	

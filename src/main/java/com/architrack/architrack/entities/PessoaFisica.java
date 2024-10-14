@@ -33,6 +33,12 @@ public class PessoaFisica implements Serializable {
 	
 	public PessoaFisica() {}
 
+	public PessoaFisica(String rg, String cpf, Cliente cliente) {
+		this.rg = rg;
+		this.cpf = cpf;
+		this.cliente = cliente;
+	}
+
 	public Long getId() {
 		return id;
 	}

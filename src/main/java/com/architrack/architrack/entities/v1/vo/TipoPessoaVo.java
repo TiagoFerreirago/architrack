@@ -19,6 +19,12 @@ public class TipoPessoaVo {
 	public TipoPessoaVo() {
 		
 	}
+	
+	public TipoPessoaVo(String tipo, Arquiteto arquiteto) {
+		
+		this.tipo = tipo;
+		this.arquiteto = arquiteto;
+	}
 
 	public Long getKey() {
 		return key;

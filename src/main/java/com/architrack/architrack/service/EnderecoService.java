@@ -5,6 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import com.architrack.architrack.controller.EnderecoController;
 import com.architrack.architrack.dozermapper.config.DozerMapper;
 import com.architrack.architrack.entities.Endereco;
 import com.architrack.architrack.entities.v1.vo.EnderecoVo;
@@ -18,26 +22,27 @@ public class EnderecoService {
 	@Autowired
 	private EnderecoRepository repository;
 	
-	private DozerMapper mapper;
-
 
 	public EnderecoVo findById(Long id) {
 		Endereco endereco = repository.findById(id).orElseThrow(
 				() -> new ResponseNotFoundHandlerException("Id not found"));
-		EnderecoVo vo = mapper.parseObjectForEntity(endereco, EnderecoVo.class);
+		EnderecoVo vo = DozerMapper.parseObjectForEntity(endereco, EnderecoVo.class);
+		vo.add(linkTo(methodOn(EnderecoController.class).findById(id)).withSelfRel());
 		return vo;
 		
 	}
 	
 	public List<EnderecoVo> findAll() {
 		List<Endereco>endereco = repository.findAll();
-		List<EnderecoVo>listVo = mapper.parseListObjectForEntity(endereco, EnderecoVo.class);
+		List<EnderecoVo>listVo = DozerMapper.parseListObjectForEntity(endereco, EnderecoVo.class);
+		listVo.stream().forEach(x -> x.add(linkTo(methodOn(EnderecoController.class).findById(x.getKey())).withSelfRel()));
 		return listVo;
 	}
 	
 	public EnderecoVo create(EnderecoVo endereco) {
-		Endereco arq = mapper.parseObjectForEntity(endereco, Endereco.class);
-		EnderecoVo vo = mapper.parseObjectForEntity(repository.save(arq), EnderecoVo.class);
+		Endereco arq = DozerMapper.parseObjectForEntity(endereco, Endereco.class);
+		EnderecoVo vo = DozerMapper.parseObjectForEntity(repository.save(arq), EnderecoVo.class);
+		vo.add(linkTo(methodOn(EnderecoController.class).findById(arq.getId())).withSelfRel());
 		return vo;
 	}
 	
@@ -52,7 +57,8 @@ public class EnderecoService {
 		end.setEstado(endereco.getEstado());
 		end.setRua(endereco.getRua());
 		
-		EnderecoVo vo = mapper.parseObjectForEntity(repository.save(end), EnderecoVo.class);
+		EnderecoVo vo = DozerMapper.parseObjectForEntity(repository.save(end), EnderecoVo.class);
+		vo.add(linkTo(methodOn(EnderecoController.class).findById(end.getId())).withSelfRel());
 		return vo;
 	}
 	

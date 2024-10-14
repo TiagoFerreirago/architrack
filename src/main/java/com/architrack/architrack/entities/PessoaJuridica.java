@@ -33,6 +33,14 @@ public class PessoaJuridica implements Serializable {
 	
 	public PessoaJuridica() {}
 
+	public PessoaJuridica(String cnpj, String ie, Cliente cliente) {
+		
+		this.cnpj = cnpj;
+		this.inscricaoEstadual = ie;
+		this.cliente = cliente;
+	}
+	
+	
 	public Long getId() {
 		return id;
 	}

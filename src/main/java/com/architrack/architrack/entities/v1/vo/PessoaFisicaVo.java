@@ -25,6 +25,12 @@ public class PessoaFisicaVo extends RepresentationModel<PessoaFisicaVo> implemen
 		
 	}
 
+	public PessoaFisicaVo(String rg, String cpf, Cliente cliente) {
+		this.rg = rg;
+		this.cpf = cpf;
+		this.cliente = cliente;
+	}
+	
 	public Long getKey() {
 		return key;
 	}

@@ -20,6 +20,7 @@ import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/api/v1/agenda")
+
 public class AgendaController {
 
 	@Autowired

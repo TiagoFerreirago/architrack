@@ -31,6 +31,11 @@ public class TipoPessoa implements Serializable {
 		
 	}
 
+	public TipoPessoa(String tipo, Arquiteto arquiteto) {
+		this.tipo = tipo;
+		this.arquiteto = arquiteto;
+	}
+
 	public Long getId() {
 		return Id;
 	}

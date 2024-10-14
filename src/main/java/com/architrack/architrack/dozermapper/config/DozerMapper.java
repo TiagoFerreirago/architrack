@@ -10,12 +10,12 @@ public class DozerMapper {
 
 	public static final Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 	
-	public <O, D> D parseObjectForEntity(O origem, Class<D> destination) {
+	public static <O, D> D parseObjectForEntity(O origem, Class<D> destination) {
 		
 		return mapper.map(origem, destination);
 	}
 	
-	public <O, D> List<D> parseListObjectForEntity(List<O>origem, Class<D>destination){
+	public static <O, D> List<D> parseListObjectForEntity(List<O>origem, Class<D>destination){
 		
 		List<D>list = new ArrayList<>();
 		
