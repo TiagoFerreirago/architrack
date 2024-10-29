@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.architrack.testcontainers.testunit.TestUnitAgenda
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.937 s -- in com.architrack.testcontainers.testunit.TestUnitAgenda

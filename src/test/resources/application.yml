@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver 
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+springdoc:
+  pathsToMatch: /api/v1/**/**
+  swagger-ui:
+     use-root-path: true
+server:
+  port: 8888
+cors:
+  originpatterns: https://www.architrack.com,http://localhost:8080,http://localhost:3000
+    
